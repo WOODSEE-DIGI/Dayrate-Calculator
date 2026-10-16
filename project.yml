@@ -1,0 +1,90 @@
+name: DayrateCalculator
+targets:
+  DayrateCore:
+    type: framework
+    platform: macOS
+    deploymentTarget: "14.0"
+    sources:
+      - Sources/DayrateCore
+    settings:
+      PRODUCT_BUNDLE_IDENTIFIER: com.fusv.DayrateCalculator.core
+      MARKETING_VERSION: "1.0"
+      CURRENT_PROJECT_VERSION: "1"
+      GENERATE_INFOPLIST_FILE: YES
+      INFOPLIST_KEY_NSHumanReadableCopyright: ""
+      SWIFT_EMIT_LOC_STRINGS: YES
+
+  DayrateCalculator:
+    type: application
+    platform: macOS
+    deploymentTarget: "14.0"
+    sources:
+      - Sources/DayrateApp
+    dependencies:
+      - target: DayrateCore
+    settings:
+      PRODUCT_BUNDLE_IDENTIFIER: com.fusv.DayrateCalculator
+      MARKETING_VERSION: "1.0"
+      CURRENT_PROJECT_VERSION: "1"
+      GENERATE_INFOPLIST_FILE: YES
+      INFOPLIST_KEY_LSMinimumSystemVersion: "14.0"
+      INFOPLIST_KEY_NSHumanReadableCopyright: ""
+      SWIFT_EMIT_LOC_STRINGS: YES
+    entitlements:
+      path: Sources/DayrateApp/DayrateCalculator.entitlements
+      properties:
+        com.apple.security.app-sandbox: true
+        com.apple.security.network.client: true
+        com.apple.security.application-groups:
+          - group.com.fusv.DayrateCalculator
+
+  DayrateWidget:
+    type: app-extension
+    platform: macOS
+    deploymentTarget: "14.0"
+    sources:
+      - Sources/DayrateWidget
+    dependencies:
+      - target: DayrateCore
+    settings:
+      PRODUCT_BUNDLE_IDENTIFIER: com.fusv.DayrateCalculator.widget
+      MARKETING_VERSION: "1.0"
+      CURRENT_PROJECT_VERSION: "1"
+      GENERATE_INFOPLIST_FILE: YES
+      INFOPLIST_KEY_LSMinimumSystemVersion: "14.0"
+      INFOPLIST_KEY_NSHumanReadableCopyright: ""
+      SWIFT_EMIT_LOC_STRINGS: YES
+    entitlements:
+      path: Sources/DayrateWidget/DayrateWidget.entitlements
+      properties:
+        com.apple.security.app-sandbox: true
+        com.apple.security.network.client: true
+        com.apple.security.application-groups:
+          - group.com.fusv.DayrateCalculator
+    info:
+      path: Sources/DayrateWidget/Info.plist
+      properties:
+        NSExtension:
+          NSExtensionPointIdentifier: com.apple.widgetkit-extension
+
+settings:
+  DEVELOPMENT_TEAM: ""
+  CODE_SIGN_STYLE: Automatic
+  ENABLE_HARDENED_RUNTIME: YES
+  configs:
+    debug:
+      # Allow local debug builds without a paid Apple Developer account.
+      # App Groups will not be functional until you assign a team and enable signing,
+      # so the widget won't share settings with the main app in unsigned debug builds.
+      CODE_SIGNING_ALLOWED: NO
+    release:
+      CODE_SIGNING_ALLOWED: YES
+
+schemes:
+  DayrateCalculator:
+    build:
+      targets:
+        DayrateCalculator: all
+        DayrateWidget: all
+    run:
+      target: DayrateCalculator
