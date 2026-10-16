@@ -4,6 +4,8 @@ A tongue-in-cheek macOS app and desktop widget that shows what your dayrate *sho
 
 > Your skills didn't get cheaper. The barrel just got more expensive. This calculator proves it.
 
+![Dayrate Calculator](screenshot.png)
+
 ## Features
 
 - **macOS app**: Enter what you're currently charging, toggle which commodities influence the calculation, refresh live prices, and see what you'd need to charge to keep up.
